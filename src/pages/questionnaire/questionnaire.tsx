@@ -1,30 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "./questionnaire.scss";
-import { questionsData } from "../../configs/questions";
+import { categories, questionsData } from "../../configs/questions";
+import Question from "../../components/question/question.component";
 
 const Questionnaire = () => {
-  const [questions, setQuestions] = useState<any>([]);
+  const [questionsArr, setQuestionsArr] = useState<any>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [answer, setAnswer] = useState("");
 
   useEffect(() => {
-    let questionsData_ = structuredClone(questionsData);
-    setQuestions(questionsData_);
+    setQuestionsArr(questionsData);
   }, []);
 
   const handleNext = () => {
-    if (currentQuestionIndex < questions.length - 1) {
+    if (currentQuestionIndex < questionsArr?.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setAnswer("");
     }
   };
 
-  const handleInputChange = (e: any) => {
-    setAnswer(e.target.value);
-  };
-
-  const currentQuestion = questions[currentQuestionIndex];
-
+  const currentQuestion = questionsArr[currentQuestionIndex];
   return (
     // <div className="questionnaire-container">
     //   <div className="header">
@@ -64,11 +58,20 @@ const Questionnaire = () => {
     // </div>
     <div className="page-wrap">
       <div className="content-wrap">
-        <div>Nutrition Calculator</div>
-        <div>Hamburger</div>
-        <div>
-          <p>Pre-question</p>
+        <h2 className="heading">Nutrition Calculator</h2>
+        <div className="hamburgerWrapper">
+          {categories?.map((catg) => (
+            <div
+              className={`${
+                catg === currentQuestion?.category ? "selected" : ""
+              }`}
+            >
+              {catg}
+            </div>
+          ))}
         </div>
+        <Question currentQuestion={currentQuestion} />
+        <button onClick={handleNext}>Next</button>
       </div>
     </div>
   );
