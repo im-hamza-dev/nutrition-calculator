@@ -10,11 +10,9 @@ const QuestionProvider = ({ children }: any) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [error, setError] = useState<boolean>(false);
   useEffect(() => {
-    console.log("runnning provider effect");
     setQuestionsArr(questionsData);
     setAnswers(answersInitial);
   }, []);
-  console.log(currentQuestionIndex);
   const handleNext = () => {
     if (validateAnswer()) {
       setError(true);
@@ -36,7 +34,6 @@ const QuestionProvider = ({ children }: any) => {
     let currentQ = questionsArr[currentQuestionIndex];
     if (currentQ.id === "Q1") {
       //age
-      console.log(answers);
       if (
         !(
           answers?.age &&
