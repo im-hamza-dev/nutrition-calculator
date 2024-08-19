@@ -1,24 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./questionnaire.scss";
-import { categories, questionsData } from "../../configs/questions";
+import {
+  answersInitial,
+  categories,
+  questionsData,
+} from "../../configs/questions";
 import Question from "../../components/question/question.component";
+import { QuestionStates } from "../../context/questionsProvider";
 
 const Questionnaire = () => {
-  const [questionsArr, setQuestionsArr] = useState<any>([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
-  const [answer, setAnswer] = useState("");
-
-  useEffect(() => {
-    setQuestionsArr(questionsData);
-  }, []);
-
-  const handleNext = () => {
-    if (currentQuestionIndex < questionsArr?.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
-  };
-
-  const currentQuestion = questionsArr[currentQuestionIndex];
+  const { handleBack, handleNext, currentQuestionIndex, questionsArr, error } =
+    QuestionStates();
+  let currentQuestion = questionsArr[currentQuestionIndex];
   return (
     // <div className="questionnaire-container">
     //   <div className="header">
@@ -58,6 +51,9 @@ const Questionnaire = () => {
     // </div>
     <div className="page-wrap">
       <div className="content-wrap">
+        <button onClick={handleBack} className="nextButton">
+          Back
+        </button>
         <h2 className="heading">Nutrition Calculator</h2>
         <div className="hamburgerWrapper">
           {categories?.map((catg) => (
@@ -70,8 +66,15 @@ const Questionnaire = () => {
             </div>
           ))}
         </div>
-        <Question currentQuestion={currentQuestion} />
-        <button onClick={handleNext}>Next</button>
+        <Question />
+        <button
+          className={`nextButton ${error ? "disabled" : ""}`}
+          onClick={handleNext}
+        >
+          Next
+        </button>
+        <br />
+        {error && <div>Invalid Answer!</div>}
       </div>
     </div>
   );

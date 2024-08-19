@@ -1,6 +1,26 @@
 .questionWrapper {
+  max-width: 500px;
+  text-align: center;
+  margin: 0px auto;
   .preQuestion {
   }
   .question {
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.679);
+  }
+}
+
+.number-input {
+  input {
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    padding: 5px 20px;
+    height: 80px;
+    width: 100px;
+    font-size: 30px;
+    color: rgba(0, 0, 0, 0.679);
+    font-weight: 600;
+    text-align: center;
   }
 }

@@ -1,13 +1,12 @@
 import React from "react";
+import "./question.scss";
 import { generateInputElem } from "./helper";
+import { QuestionDetails } from "../../utils/interfaces";
+import { QuestionStates } from "../../context/questionsProvider";
 
-interface QuestionProp {
-  currentQuestion: any; // QuestionDetails;
-}
-
-const Question = (props: QuestionProp) => {
-  let { currentQuestion } = props;
-
+const Question = () => {
+  const { currentQuestionIndex, questionsArr } = QuestionStates();
+  let currentQuestion = questionsArr[currentQuestionIndex];
   let questionInput = generateInputElem(currentQuestion);
   return (
     <div className="questionWrapper">
