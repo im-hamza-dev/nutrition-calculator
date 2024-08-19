@@ -1,41 +1,90 @@
-import React, { useState } from 'react';
-import './weight.component.scss';
+import React, { useEffect, useState } from "react";
+import "./weight.component.scss";
+import { QuestionStates } from "../../context/questionsProvider";
 
 const Weight = () => {
-  const [unit, setUnit] = useState('KG');
-  const [weight, setWeight] = useState(75);
+  const [unit, setUnit] = useState("KG");
+  const [weight, setWeight] = useState(null);
+  const [targetDate, setTargetDate] = useState("");
+  let { answers, setAnswers, currentQuestionIndex, questionsArr } =
+    QuestionStates();
+  let currentQuestion = questionsArr[currentQuestionIndex];
 
-  const handleUnitChange = (unit:any) => {
+  useEffect(() => {
+    if (currentQuestion.id === "Q6") {
+      setWeight(answers.targetWeight);
+      setTargetDate(answers.targetDate);
+    }
+  }, []);
+
+  const handleUnitChange = (unit: any) => {
+    setWeight(null);
     setUnit(unit);
   };
 
-  const handleWeightChange = (e:any) => {
-    setWeight(e.target.value);
+  const convertToKg = (pounds: number) => {
+    const kgPerPound = 0.45359237; // 1 pound is approximately 0.45359237 kilograms
+    const kilograms = pounds * kgPerPound;
+    return kilograms;
   };
 
+  const handleWeightChange = (e: any) => {
+    setWeight(e.target.value);
+    let weight_ = e.target.value;
+    if (unit === "LBS") {
+      weight_ = convertToKg(weight_);
+    }
+    let answers_ = structuredClone(answers);
+    if (currentQuestion.id === "Q6") {
+      answers_.targetWeight = parseInt(weight_);
+      answers_.targetDate = targetDate;
+    } else {
+      answers_.weight = parseInt(weight_);
+    }
+    setAnswers(answers_);
+  };
+  const updateDateToAnswer = (value: string) => {
+    setTargetDate(value);
+    let answers_ = structuredClone(answers);
+    answers_.targetDate = value;
+
+    setAnswers(answers_);
+  };
+  console.log(targetDate);
   return (
     <div className="weight-selector">
-      <p className="instruction">Great. Last question in the section.</p>
-      <h2 className="question">How much do you weigh right now?</h2>
       <div className="input-group">
-        <input type="number" value={weight} onChange={handleWeightChange} />
+        <input
+          type="number"
+          value={weight || 0}
+          onChange={handleWeightChange}
+        />
         <div className="unit-toggle">
           <button
-            className={unit === 'LBS' ? 'active' : ''}
-            onClick={() => handleUnitChange('LBS')}
+            className={unit === "LBS" ? "active" : ""}
+            onClick={() => handleUnitChange("LBS")}
           >
             LBS
           </button>
           <button
-            className={unit === 'KG' ? 'active' : ''}
-            onClick={() => handleUnitChange('KG')}
+            className={`kg ${unit === "KG" ? "active" : ""}`}
+            onClick={() => handleUnitChange("KG")}
           >
             KG
           </button>
         </div>
       </div>
-      <p className="valid-range">Valid weight is 23-227 kg</p>
-      <button className="next-button">NEXT</button>
+      <p className="valid-range">
+        Valid weight is {unit === "LBS" ? "50-500 lbs" : "23-227 kg"}
+      </p>
+
+      {currentQuestion.id === "Q6" && (
+        <input
+          type="date"
+          value={targetDate}
+          onChange={(e) => updateDateToAnswer(e.target.value)}
+        />
+      )}
     </div>
   );
 };

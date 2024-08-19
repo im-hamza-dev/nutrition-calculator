@@ -1,47 +1,83 @@
-// // Online Javascript Editor for free
-// // Write, Edit and Run your Javascript code using JS Online Compiler
-// const userData = {
-//     weight: 75, // in kg
-//     height: 167, // in cm
-//     age: 25, // in years
-//     activityLevel: 1.55, // Moderately Active
-//     targetWeight: 67, // in kg
-//     timeFrame: 3, // in months
-//   };
+// Online Javascript Editor for free
+// Write, Edit and Run your Javascript code using JS Online Compiler
+const userData = {
+  weight: 75, // in kg
+  height: 167, // in cm
+  age: 25, // in years
+  activityLevel: 1.55, // Moderately Active
+  targetWeight: 67, // in kg
+  timeFrame: 3, // in months
+};
 
-//   const calculateCalories = (data) => {
-//     const { weight, height, age, activityLevel, targetWeight, timeFrame } = data;
+const generateActivityLevelValue = (activityLevel: any) => {
+  let value = 1.2;
+  if (activityLevel === "Very Light") {
+    value = 1.2;
+  } else if (activityLevel === "Light") {
+    value = 1.375;
+  } else if (activityLevel === "Moderate") {
+    value = 1.55;
+  } else if (activityLevel === "Intense") {
+    value = 1.725;
+  } else if (activityLevel === "Very Intense") {
+    value = 1.9;
+  }
+  return value;
+};
+const daysUntilDeadline = (deadlineDate: string) => {
+  const currentDate: any = new Date(); // Get the current date
+  const deadline: any = new Date(deadlineDate); // Convert the deadline date string to a Date object
 
-//     // Calculate BMR using Mifflin-St Jeor Equation for Men
-//     const BMR = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+  // Calculate the difference in time (in milliseconds)
+  const timeDifference: number = deadline - currentDate;
 
-//     // Calculate TDEE
-//     const TDEE = BMR * activityLevel;
+  // Convert time difference from milliseconds to days
+  const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
-//     // Weight loss goal calculations
-//     const weightLossKg = weight - targetWeight; // Amount of weight to lose
-//     const caloriesPerKg = 7700; // Approx. calories per kg of weight loss
-//     const totalCaloricDeficit = weightLossKg * caloriesPerKg;
+  return daysRemaining;
+};
 
-//     // Convert time frame from months to days
-//     const days = timeFrame * 30;
+const calculateCalories = (data: any) => {
+  const {
+    weight,
+    height,
+    age,
+    targetWeight,
+    targetDate,
+    gender,
+    exerciseLevel,
+  } = data;
 
-//     // Daily caloric deficit required
-//     const dailyCaloricDeficit = totalCaloricDeficit / days;
+  // Calculate BMR using Mifflin-St Jeor Equation for Men
+  const BMR =
+    gender === "Male"
+      ? 88.362 + 13.397 * weight + 4.799 * height - 5.677 * age
+      : 447.593 + 9.247 * weight + 3.098 * height - 4.33 * age;
 
-//     // Required daily intake to meet goal
-//     const requiredCalories = TDEE - dailyCaloricDeficit;
+  let activityLevelValue = generateActivityLevelValue(exerciseLevel);
+  // Calculate TDEE
+  const TDEE = BMR * activityLevelValue;
 
-//     return {
-//       BMR: BMR.toFixed(2),
-//       TDEE: TDEE.toFixed(2),
-//       dailyCaloricDeficit: dailyCaloricDeficit.toFixed(2),
-//       requiredCalories: requiredCalories.toFixed(2),
-//     };
-//   };
+  // Weight loss goal calculations
+  const weightLossKg = weight - targetWeight; // Amount of weight to lose
+  const caloriesPerKg = 7700; // Approx. calories per kg of weight loss
+  const totalCaloricDeficit = weightLossKg * caloriesPerKg;
 
-//   const results = calculateCalories(userData);
+  // Convert time frame from months to days
+  const days = daysUntilDeadline(targetDate);
 
-// console.log("Try programiz.pro", results);
+  // Daily caloric deficit required
+  const dailyCaloricDeficit = totalCaloricDeficit / days;
 
-export {}
+  // Required daily intake to meet goal
+  const requiredCalories = TDEE - dailyCaloricDeficit;
+
+  return {
+    BMR: BMR.toFixed(2),
+    TDEE: TDEE.toFixed(2),
+    dailyCaloricDeficit: dailyCaloricDeficit.toFixed(2),
+    requiredCalories: requiredCalories.toFixed(2),
+  };
+};
+
+export { calculateCalories };

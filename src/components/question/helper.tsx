@@ -4,6 +4,7 @@ import Height from "../height/height.component";
 import MultipleChoice from "../multipleChoice/multipleChoice.component";
 import Summary from "../summary/summary.component";
 import { QuestionDetails } from "../../utils/interfaces";
+import Name from "../name/name.component";
 
 const generateInputElem = (currentQuestion: QuestionDetails) => {
   let inputElem = <div></div>;
@@ -21,7 +22,7 @@ const generateInputElem = (currentQuestion: QuestionDetails) => {
       inputElem = <MultipleChoice />;
       break;
     case "name":
-      inputElem = <div>Name and email</div>;
+      inputElem = <Name />;
       break;
     case "summary":
       inputElem = <Summary />;

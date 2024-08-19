@@ -51,9 +51,12 @@ const Questionnaire = () => {
     // </div>
     <div className="page-wrap">
       <div className="content-wrap">
-        <button onClick={handleBack} className="nextButton">
-          Back
-        </button>
+        <div className="backWrapper">
+          <button onClick={handleBack} className="nextButton">
+            Back
+          </button>
+          <div>{currentQuestionIndex + 1}/11</div>
+        </div>
         <h2 className="heading">Nutrition Calculator</h2>
         <div className="hamburgerWrapper">
           {categories?.map((catg) => (

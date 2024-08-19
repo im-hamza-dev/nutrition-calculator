@@ -22,7 +22,10 @@ export const questionsData: any = [
     description: "",
     type: "multipleChoice",
 
-    validation: null,
+    validation: {
+      min: 60,
+      max: 300,
+    },
     options: [
       {
         id: 1,
@@ -57,13 +60,13 @@ export const questionsData: any = [
     id: "Q4",
 
     category: "Details",
-    question: "How tall are you?",
-    preQuestion: "Got it. Next question.",
+    question: "How much do you weigh right now?",
+    preQuestion: "Great. Last question in the section.",
     description: "",
     type: "weight",
     validation: {
-      min: 60, //cm
-      max: 300,
+      min: 23, //kgs
+      max: 227,
     },
   },
   {
@@ -120,6 +123,19 @@ export const questionsData: any = [
   {
     id: "Q6",
 
+    category: "Goals",
+    question: "How much do you want to weigh?",
+    preQuestion: "Let's get really specific on this.",
+    description: "",
+    type: "weight",
+    validation: {
+      min: 23, //kgs
+      max: 227,
+    },
+  },
+  {
+    id: "Q7",
+
     category: "Diet",
     question: "What's your preferred eating style?",
     preQuestion: "Almost there. Time to talk food.",
@@ -175,18 +191,49 @@ export const questionsData: any = [
     ],
   },
   {
-    id: "Q7",
+    id: "Q8",
 
     category: "Diet",
     question:
       "Do you want to use Fully Plant-Based's standard macronutrient ratios, or customize?",
     preQuestion: "Tell us how to run the numbers.",
     description: "",
-    type: "ratios",
+    type: "multipleChoice",
     validation: {},
+    options: [
+      // {
+      //   id: 1,
+      //   label: [30, 35, 35],
+      //   description: "Standard",
+      //   image: "path/to/very-light.png", // Replace with actual image path
+      //   visible: true,
+      // },
+      {
+        id: 1,
+        label: "Balanced",
+        description: "30% Protien, 35% Carb, 35% Fat",
+        image: "path/to/very-light.png", // Replace with actual image path
+        visible: true,
+      },
+      {
+        id: 2,
+        label: "Low-Fat",
+        description: "30% Protien, 50% Carb, 20% Fat",
+
+        image: "path/to/very-light.png", // Replace with actual image path
+        visible: true,
+      },
+      {
+        id: 3,
+        label: "Low-carb",
+        description: "30% Protien, 20% Carb, 50% Fat",
+        image: "path/to/very-light.png", // Replace with actual image path
+        visible: true,
+      },
+    ],
   },
   {
-    id: "Q8",
+    id: "Q9",
 
     category: "Diet",
     question: "How many meals do you like to eat each day?",
@@ -200,7 +247,7 @@ export const questionsData: any = [
     },
   },
   {
-    id: "Q9",
+    id: "Q10",
 
     category: "Activity",
     question: "Describe how active you are each day.",
@@ -239,7 +286,7 @@ export const questionsData: any = [
     ],
   },
   {
-    id: "Q10",
+    id: "Q11",
 
     category: "Activity",
     question: "What best describes your weekly workouts?",
@@ -281,7 +328,17 @@ export const questionsData: any = [
     ],
   },
   {
-    id: "Q11",
+    id: "Q12",
+
+    category: "Results",
+    question: "Results are ready!",
+    preQuestion: "",
+    description: "",
+    type: "name",
+    validation: {},
+  },
+  {
+    id: "Q13",
 
     category: "Results",
     question: "Results are ready!",
@@ -300,8 +357,15 @@ export const answersInitial = {
   height: null, // in cm
   age: null, // in years
   activityLevel: null, // Moderately Active
+  exerciseLevel: null,
   targetWeight: null, // in kg
-  targetDays: null, // in months
+  targetDate: null, // in months
+
+  //use below to generate macro's %
+  meals: 0,
+  goals: "",
+  eatingStyle: "",
+  macroRatio: null,
 };
 
 export const categories = ["Details", "Goals", "Diet", "Activity", "Results"];

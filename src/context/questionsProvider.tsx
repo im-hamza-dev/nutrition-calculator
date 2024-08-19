@@ -14,6 +14,7 @@ const QuestionProvider = ({ children }: any) => {
     setAnswers(answersInitial);
   }, []);
   const handleNext = () => {
+    console.log(answers);
     if (validateAnswer()) {
       setError(true);
       return;
@@ -37,18 +38,41 @@ const QuestionProvider = ({ children }: any) => {
       if (
         !(
           answers?.age &&
-          answers.age < currentQ.validation.max &&
-          answers.age > currentQ.validation.min
+          answers.age <= currentQ.validation.max &&
+          answers.age >= currentQ.validation.min
         )
       ) {
         validationFailed = true;
       }
     } else if (currentQ.id === "Q2") {
       //gender
+      //age
+      if (!answers?.gender) {
+        validationFailed = true;
+      }
     } else if (currentQ.id === "Q3") {
       //height
+      //age
+      if (
+        !(
+          answers?.height &&
+          answers.height <= currentQ.validation.max &&
+          answers.height >= currentQ.validation.min
+        )
+      ) {
+        validationFailed = true;
+      }
     } else if (currentQ.id === "Q4") {
       //weight
+      if (
+        !(
+          answers?.weight &&
+          answers.weight <= currentQ.validation.max &&
+          answers.weight >= currentQ.validation.min
+        )
+      ) {
+        validationFailed = true;
+      }
     } else if (currentQ.id === "Q5") {
       //multipleChoice
     } else if (currentQ.id === "Q6") {

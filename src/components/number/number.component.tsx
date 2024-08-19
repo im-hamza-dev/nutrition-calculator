@@ -7,7 +7,11 @@ const Number = () => {
 
   const handleUpdateToAnswer = (age: number) => {
     let answers_ = structuredClone(answers);
-    answers_.age = age;
+    if (currentQuestion.id === "Q1") {
+      answers_.age = age;
+    } else {
+      answers_.meals = age;
+    }
     setAnswers(answers_);
   };
   let currentQuestion = questionsArr[currentQuestionIndex];
@@ -15,7 +19,7 @@ const Number = () => {
   return (
     <div className="number-input">
       <input
-        value={answers.age}
+        value={currentQuestion.id === "Q1" ? answers.age : answers.meals}
         type="number"
         onChange={(e) => handleUpdateToAnswer(parseInt(e.target.value))}
         min={currentQuestion?.validation?.min}

@@ -1,51 +1,101 @@
-import React, { useState } from "react";
-import "./height.component.scss"
- 
-const Height = () => {
+import React, { useEffect, useState } from "react";
+import "./height.component.scss";
+import { QuestionStates } from "../../context/questionsProvider";
 
-    const [unit, setUnit] = useState('FT');
-    const [feet, setFeet] = useState(5);
-    const [inches, setInches] = useState(6);
-  
-    const handleUnitChange = (unit:any) => {
-      setUnit(unit);
+const Height = () => {
+  const [unit, setUnit] = useState("FT");
+  const [feet, setFeet] = useState<number>();
+  const [inches, setInches] = useState<number>();
+  const [cm, setCm] = useState<number>();
+  let { answers, setAnswers } = QuestionStates();
+
+  const handleUnitChange = (unit: any) => {
+    setUnit(unit);
+  };
+  const convertToCm = (feet: number, inches: number) => {
+    const cmPerInch = 2.54;
+    const inchesPerFoot = 12;
+    const totalInches = feet * inchesPerFoot + inches;
+    // Convert total inches to centimeters
+    const centimeters = totalInches * cmPerInch;
+    return centimeters;
+  };
+
+  useEffect(() => {
+    const handleHeightChange = () => {
+      let centimeter = 0;
+      if (unit === "FT" && feet && inches) {
+        centimeter = convertToCm(feet, inches);
+      } else if (unit === "CM" && cm) {
+        centimeter = cm;
+      }
+      let answers_ = structuredClone(answers);
+      answers_.height = centimeter;
+      console.log(answers_);
+      setAnswers(answers_);
     };
-  
-    const handleFeetChange = (e:any) => {
-      setFeet(e.target.value);
-    };
-  
-    const handleInchesChange = (e:any) => {
-      setInches(e.target.value);
-    };
-  
-    return (
-      <div className="height-selector">
-        <p className="instruction">Got it. Next question.</p>
-        <h2 className="question">How tall are you?</h2>
-        <div className="unit-toggle">
-          <button
-            className={unit === 'FT' ? 'active' : ''}
-            onClick={() => handleUnitChange('FT')}
-          >
-            FT
-          </button>
-          <button
-            className={unit === 'CM' ? 'active' : ''}
-            onClick={() => handleUnitChange('CM')}
-          >
-            CM
-          </button>
-        </div>
-        <div className="input-group">
-          <input type="number" value={feet} onChange={handleFeetChange} /> <span>ft</span>
-        </div>
-        <div className="input-group">
-          <input type="number" value={inches} onChange={handleInchesChange} /> <span>in</span>
-        </div>
-        <p className="valid-range">Valid height is 2'-9'11"</p>
-        <button className="next-button">NEXT</button>
+    handleHeightChange();
+  }, [feet, cm, inches]);
+
+  return (
+    <div className="height-selector">
+      <div className="unit-toggle">
+        <button
+          className={`ft ${unit === "FT" ? "active" : ""}`}
+          onClick={() => handleUnitChange("FT")}
+        >
+          FT
+        </button>
+        <button
+          className={`cm ${unit === "CM" ? "active" : ""}`}
+          onClick={() => handleUnitChange("CM")}
+        >
+          CM
+        </button>
       </div>
-    );};
+      {unit === "FT" ? (
+        <div className="input-group-parent">
+          <div className="input-group">
+            <input
+              type="number"
+              value={feet}
+              onChange={(e) => setFeet(parseInt(e.target.value))}
+              min={2}
+              max={9}
+            />
+            <span>ft</span>
+          </div>
+          <div className="input-group">
+            <input
+              type="number"
+              value={inches}
+              onChange={(e) => setInches(parseInt(e.target.value))}
+              min={0}
+              max={12}
+            />
+            <span>in</span>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="input-group">
+            <input
+              type="number"
+              value={cm}
+              onChange={(e) => setCm(parseInt(e.target.value))}
+              min={60}
+              max={300}
+            />
+            <span>cm</span>
+          </div>
+        </>
+      )}
+
+      <p className="valid-range">
+        Valid height is {unit === "FT" ? "2'-9'11\"" : "60-300cm"}
+      </p>
+    </div>
+  );
+};
 
 export default Height;
