@@ -1,13 +1,13 @@
 // Online Javascript Editor for free
 // Write, Edit and Run your Javascript code using JS Online Compiler
-const userData = {
-  weight: 75, // in kg
-  height: 167, // in cm
-  age: 25, // in years
-  activityLevel: 1.55, // Moderately Active
-  targetWeight: 67, // in kg
-  timeFrame: 3, // in months
-};
+// const userData = {
+//   weight: 75, // in kg
+//   height: 167, // in cm
+//   age: 25, // in years
+//   activityLevel: 1.55, // Moderately Active
+//   targetWeight: 67, // in kg
+//   timeFrame: 3, // in months
+// };
 
 const generateActivityLevelValue = (activityLevel: any) => {
   let value = 1.2;
@@ -24,7 +24,7 @@ const generateActivityLevelValue = (activityLevel: any) => {
   }
   return value;
 };
-const daysUntilDeadline = (deadlineDate: string) => {
+export const daysUntilDeadline = (deadlineDate: string) => {
   const currentDate: any = new Date(); // Get the current date
   const deadline: any = new Date(deadlineDate); // Convert the deadline date string to a Date object
 

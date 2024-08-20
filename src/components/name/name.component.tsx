@@ -7,23 +7,23 @@ const Name = () => {
 
   const handleUpdateToAnswer = (value: string, key: string) => {
     let answers_ = structuredClone(answers);
-    answers[key] = value;
+    answers_[key] = value;
     setAnswers(answers_);
   };
   let currentQuestion = questionsArr[currentQuestionIndex];
   console.log(currentQuestion);
   return (
-    <div className="number-input">
+    <div className="number-input nameWrapper">
       <input
         value={answers.name}
         type="text"
-        placeholder="Name"
+        placeholder="Full Name here"
         onChange={(e) => handleUpdateToAnswer(e.target.value, "name")}
       />
       <input
         value={answers.email}
         type="email"
-        placeholder="Email"
+        placeholder="Type your Email here"
         onChange={(e) => handleUpdateToAnswer(e.target.value, "email")}
       />
     </div>

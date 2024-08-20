@@ -225,7 +225,7 @@ export const questionsData: any = [
       },
       {
         id: 3,
-        label: "Low-carb",
+        label: "Low-Carb",
         description: "30% Protien, 20% Carb, 50% Fat",
         image: "path/to/very-light.png", // Replace with actual image path
         visible: true,
@@ -331,7 +331,7 @@ export const questionsData: any = [
     id: "Q12",
 
     category: "Results",
-    question: "Results are ready!",
+    question: "Give Contact Details!",
     preQuestion: "",
     description: "",
     type: "name",
@@ -341,9 +341,10 @@ export const questionsData: any = [
     id: "Q13",
 
     category: "Results",
-    question: "Results are ready!",
+    question: "Your Results!",
     preQuestion: "",
-    description: "",
+    description:
+      "We’ve created a personalized eating guide for your body, activity levels, eating preferences, and goals.",
     type: "summary",
     validation: {},
   },

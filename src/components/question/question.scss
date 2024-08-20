@@ -24,3 +24,17 @@
     text-align: center;
   }
 }
+.nameWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  input {
+    width: 300px;
+    height: 50px;
+    font-size: 20px;
+    &::placeholder {
+      color: lightgrey;
+    }
+  }
+}

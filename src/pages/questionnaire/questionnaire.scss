@@ -25,10 +25,11 @@
       margin: 0px auto 20px;
     }
     .heading {
-      font-size: 34px;
+      font-size: 30px;
       font-weight: 800;
       color: rgba(0, 0, 0, 0.679);
-      margin: 20px 0px;
+      margin: 20px auto;
+      max-width: 600px;
     }
     .hamburgerWrapper {
       display: flex;
