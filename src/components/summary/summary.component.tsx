@@ -94,10 +94,18 @@ const Summary = () => {
         </p>
         <h3>{caloriesData?.requiredCalories} Calories per day.</h3>
       </div>
-      <h2>HERE'S HOW THAT BREAKS DOWN:</h2>
-      <div>Protien: {macros.protien / 4}</div>
-      <div>Carbs: {macros.carbs / 4}</div>
-      <div>Fat: {macros.fats / 9}</div>
+      <div className="summary-macros">
+        <h2>HERE'S HOW THAT BREAKS DOWN:</h2>
+        <div className="summary-macros-item">
+          Protien: {Math.floor(macros.protien / 4)} g
+        </div>
+        <div className="summary-macros-item">
+          Carbs: {Math.floor(macros.carbs / 4)} g
+        </div>
+        <div className="summary-macros-item">
+          Fat: {Math.floor(macros.fats / 9)} g
+        </div>
+      </div>
     </div>
   );
 };

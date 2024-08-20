@@ -3,8 +3,27 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgb(87, 87, 87);
+  border: none;
+  border-bottom: 1px solid rgba(87, 87, 87, 0.321);
+  padding: 20px 20px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.679);
 }
 .summary-metrics {
   text-align: center;
+  color: rgba(0, 0, 0, 0.679);
+}
+.summary-macros {
+  margin: 20px auto;
+  color: rgba(0, 0, 0, 0.679);
+  .summary-macros-item {
+    font-size: 20px;
+    // font-weight: 600;
+    margin: 10px 20px;
+  }
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid rgba(87, 87, 87, 0.321);
 }
