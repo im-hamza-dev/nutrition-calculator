@@ -2,7 +2,38 @@ import React, { useEffect, useState } from "react";
 import { QuestionStates } from "../../context/questionsProvider";
 import { calculateCalories, daysUntilDeadline } from "../../utils/helper";
 import "./summary.scss";
-
+const nutritionData = [
+  {
+    id: 1,
+    portions: "6 palm-sized portions",
+    weight: "185 g",
+    type: "protein",
+    total: "2 total palms or 62 g per meal",
+    examples: ["Chicken", "Tofu", "Fish", "Greek yogurt"],
+    image: "path/to/palm.png", // Replace with actual image path
+    colorClass: "protein-color",
+  },
+  {
+    id: 2,
+    portions: "6 - 8 fist-sized portions",
+    weight: "veggies",
+    type: "veggies",
+    total: "2 or 3 total fists per meal",
+    examples: ["Spinach", "Carrots", "Cauliflower", "Tomatoes"],
+    image: "path/to/fist.png", // Replace with actual image path
+    colorClass: "veggies-color",
+  },
+  {
+    id: 3,
+    portions: "5 cupped handfuls",
+    weight: "170 g",
+    type: "carbs",
+    total: "1 or 2 total handfuls or 57 g per meal",
+    examples: ["Beans", "Blueberries", "Sweet potatoes", "Oats"],
+    image: "path/to/handful.png", // Replace with actual image path
+    colorClass: "carbs-color",
+  },
+];
 const Summary = () => {
   const [caloriesData, setCaloriesData] = useState<any>(null);
   const [macros, setMacros] = useState<any>({
@@ -105,6 +136,32 @@ const Summary = () => {
         <div className="summary-macros-item">
           Fat: {Math.floor(macros.fats / 9)} g
         </div>
+      </div>
+      <div className="nutrition-info">
+        {nutritionData.map((item) => (
+          <div key={item.id} className="nutrition-item">
+            <div className="nutrition-image">
+              <img src={item.image} alt={item.type} />
+            </div>
+            <div className="nutrition-details">
+              <h3>
+                {item.portions} (or {item.weight}) of{" "}
+                <span className={item.colorClass}>{item.type}</span> per day
+              </h3>
+              <p>
+                That's <strong>{item.total}</strong>.
+              </p>
+              <div className="nutrition-examples">
+                <strong>FOR EXAMPLE</strong>
+                <ul>
+                  {item.examples.map((example, index) => (
+                    <li key={index}>{example}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
