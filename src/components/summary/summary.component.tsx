@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { QuestionStates } from "../../context/questionsProvider";
 import { calculateCalories, daysUntilDeadline } from "../../utils/helper";
+import { degrees, PDFDocument, rgb, StandardFonts } from "pdf-lib";
+// @ts-ignore
+import PdfFile from "../../assets/files/template.pdf"
 import "./summary.scss";
 const nutritionData = [
   {
@@ -92,6 +95,33 @@ const Summary = () => {
     }
     return ratio;
   };
+  const generatePdf = async () => {
+    const existingPdfBytes = await fetch(PdfFile).then((res) => res.arrayBuffer());
+
+    const pdfDoc = await PDFDocument.load(existingPdfBytes);
+    const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+    const pages = pdfDoc.getPages();
+    const firstPage = pages[0];
+    const { width, height } = firstPage.getSize();
+    firstPage.drawText("This text sadfsafdswas added with JavaScript!", {
+      x: 5,
+      y: height / 2 + 300,
+      size: 50,
+      font: helveticaFont,
+      color: rgb(0.95, 0.1, 0.1),
+      rotate: degrees(-45),
+    });
+    console.log(width, firstPage)
+
+    const pdfBytes = await pdfDoc.save();
+    const url_ = window.URL.createObjectURL(new Blob([pdfBytes]));
+    const link = document.createElement('a');
+    link.href = url_;
+    link.setAttribute('download', 'file.pdf'); //or any other extension
+    document.body.appendChild(link);
+    link.click();
+  };
   return (
     <div className="questionWrapper">
       <p>(Brief summary below)</p>
@@ -163,6 +193,7 @@ const Summary = () => {
           </div>
         ))}
       </div>
+      <button onClick={generatePdf}>Generate</button>
     </div>
   );
 };
