@@ -24,12 +24,27 @@
       width: 80%;
       margin: 0px auto 20px;
     }
+    .brandWrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+      flex-wrap: nowrap;
+      width: 80%;
+      gap: 20px;
+      min-height: 120px;
+    }
     .heading {
       font-size: 30px;
       font-weight: 800;
       color: rgba(0, 0, 0, 0.679);
-      margin: 20px auto;
       max-width: 600px;
+      margin: 0;
+      text-align: left;
+    }
+    .brand {
+      width: 80px;
     }
     .hamburgerWrapper {
       display: flex;

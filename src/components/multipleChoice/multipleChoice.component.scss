@@ -5,8 +5,8 @@
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 80%;
-  margin: 0px auto;
+  width: 100%;
+  margin: 20px auto;
   .exercise-option {
     border: 2px solid #354f7579;
     background-color: #354f7579;
@@ -16,7 +16,13 @@
     transition: all 0.3s ease;
     cursor: pointer;
     max-width: 200px;
-    height: 140px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2px;
+
     &.genderQ {
       height: auto;
     }
@@ -37,20 +43,23 @@
     }
 
     .exercise-image {
-      width: 50px;
+      width: 90px;
       height: auto;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
+      margin-top: 0px !important;
     }
 
     .exercise-label {
       font-size: 18px;
       color: #354f7579;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
+      margin-top: 3px !important;
     }
 
     .exercise-description {
       font-size: 14px;
       color: rgba(255, 255, 255, 0.651);
+      margin-top: 5px !important;
     }
   }
 }

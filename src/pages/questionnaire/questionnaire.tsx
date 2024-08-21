@@ -7,6 +7,7 @@ import {
 } from "../../configs/questions";
 import Question from "../../components/question/question.component";
 import { QuestionStates } from "../../context/questionsProvider";
+import Brand from "../../assets/images/brand.png";
 
 const Questionnaire = () => {
   const { handleBack, handleNext, currentQuestionIndex, questionsArr, error } =
@@ -21,9 +22,12 @@ const Questionnaire = () => {
           </button>
           <div>{currentQuestionIndex + 1}/13</div>
         </div>
-        <h2 className="heading">
-          Precision Nutrition with "Zach Lloyd Transformation Coaching"
-        </h2>
+        <div className="brandWrapper">
+          <img src={Brand} alt="Fitness Coaching" className="brand" />{" "}
+          <h2 className="heading">
+            Precision Nutrition with "Zach Lloyd Transformation Coaching"
+          </h2>
+        </div>
         <div className="hamburgerWrapper">
           {categories?.map((catg) => (
             <div
@@ -36,12 +40,14 @@ const Questionnaire = () => {
           ))}
         </div>
         <Question />
-        <button
-          className={`nextButton ${error ? "disabled" : ""}`}
-          onClick={handleNext}
-        >
-          Next
-        </button>
+        {currentQuestionIndex !== 12 && (
+          <button
+            className={`nextButton ${error ? "disabled" : ""}`}
+            onClick={handleNext}
+          >
+            Next
+          </button>
+        )}
         <br />
         {error && <div>Invalid Answer!</div>}
       </div>

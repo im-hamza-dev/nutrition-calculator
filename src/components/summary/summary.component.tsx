@@ -3,6 +3,10 @@ import { QuestionStates } from "../../context/questionsProvider";
 import { calculateCalories, daysUntilDeadline } from "../../utils/helper";
 // @ts-ignore
 import "./summary.scss";
+import Protien from "../../assets/images/palm.svg";
+import Fats from "../../assets/images/thumb.svg";
+import Carbs from "../../assets/images/cupped.svg";
+
 import { generatePdf } from "./help";
 const nutritionData = [
   {
@@ -115,7 +119,12 @@ const Summary = () => {
 
   return (
     <div className="questionWrapper">
-      <p>(Brief summary below)</p>
+      <button
+        className={"export-button"}
+        onClick={() => generatePdf(answers, caloriesData, macros, handRules)}
+      >
+        Access your Complete Guide
+      </button>
       <hr></hr>
       <h2>Brief Summary</h2>
       <div className="summaryRow">
@@ -124,7 +133,7 @@ const Summary = () => {
       </div>
       <div className="summaryRow">
         <div>Current Weight</div>
-        <div>{answers.weight}</div>
+        <div>{answers.weight} kg</div>
       </div>
       <div className="summaryRow">
         <div>Eating Style</div>
@@ -136,18 +145,24 @@ const Summary = () => {
       </div>
       <div className="summary-metrics">
         <p>
-          To maintain your current weight requires about {caloriesData?.TDEE}{" "}
+          To maintain your current weight requires about{" "}
+          <strong> {caloriesData?.TDEE} </strong>
           Calories per day.
         </p>
         <p>
-          To reach your goal of {answers.targetWeight} in{" "}
-          {daysUntilDeadline(answers.targetDate)} at your current body weight
-          and activity level, requires about:
+          To reach your goal of <strong>{answers.targetWeight} kg </strong> in{" "}
+          <strong>{daysUntilDeadline(answers.targetDate)} days </strong> at your
+          current body weight and activity level, requires about:
         </p>
-        <h3>{caloriesData?.requiredCalories} Calories per day.</h3>
+        <h1>
+          <strong>{caloriesData?.requiredCalories}</strong> Calories per day.
+        </h1>
       </div>
+      <br />
+
+      <h2>HERE'S HOW THAT BREAKS DOWN:</h2>
+      <br />
       <div className="summary-macros">
-        <h2>HERE'S HOW THAT BREAKS DOWN:</h2>
         <div className="summary-macros-item">
           Protien: {Math.floor(macros.protien)} g
         </div>
@@ -162,7 +177,9 @@ const Summary = () => {
         {Object.keys(macros).map((item) => (
           <div className="nutrition-item">
             <div className="nutrition-image">
-              {/* <img src={item.image} alt={item.type} /> */}
+              {item === "protien" && <img src={Protien} alt={"Palm"} />}
+              {item === "carbs" && <img src={Carbs} alt={"Carbo"} />}
+              {item === "fats" && <img src={Fats} alt={"Fats"} />}
             </div>
             <div className="nutrition-details">
               <h3>
@@ -173,6 +190,26 @@ const Summary = () => {
                 {item === "fats" &&
                   `${handRules.thumb} thumb sized portions ( or ${macros[item]} g ) \n of Healthy Fats per day`}
               </h3>
+              <p>
+                {item === "protien" &&
+                  `That's ${Math.round(
+                    handRules.palm / answers?.meals
+                  )} palm or ${Math.round(
+                    macros.protien / answers?.meals
+                  )} g of protien per meal`}
+                {item === "carbs" &&
+                  `That's ${Math.round(
+                    handRules.handful / answers?.meals
+                  )} palm or ${Math.round(
+                    macros.carbs / answers?.meals
+                  )} g of protien per meal`}
+                {item === "fats" &&
+                  `That's ${Math.round(
+                    handRules.thumb / answers?.meals
+                  )} palm or ${Math.round(
+                    macros.fats / answers?.meals
+                  )} g of protien per meal`}
+              </p>
               <p>{/* That's <strong>{item.total}</strong>. */}</p>
               {/* <div className="nutrition-examples">
                 <strong>FOR EXAMPLE</strong>
@@ -186,11 +223,16 @@ const Summary = () => {
           </div>
         ))}
       </div>
-      <button
-        onClick={() => generatePdf(answers, caloriesData, macros, handRules)}
-      >
-        Generate
-      </button>
+      <div className="plan-desc">
+        <h2>
+          Get your FREE personalized report and eating guide. It includes:
+        </h2>
+        <li>How to get started on your goals TODAY (and what to expect)</li>
+        <li>How to eat the right calories and macros at each meal</li>
+        <li>What foods to eat based on your preferences</li>
+        <li>How to make adjustments and maximize your results</li>
+        <li>Personalized portion tracker (this really works!)</li>
+      </div>
     </div>
   );
 };

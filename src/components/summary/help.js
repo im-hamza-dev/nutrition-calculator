@@ -32,7 +32,7 @@ export const generatePdf = async (
   const fourthPage = pages[3];
   const fifthPage = pages[4];
   const { width, height } = thirdPage.getSize();
-  const backgroundColor = rgb(0.9, 0.9, 0.9); // Light grey background color
+  const backgroundColor = rgb(239 / 255, 242 / 255, 244 / 255); // Light grey background color
   const backgroundColorWhite = rgb(1, 1, 1); // Light grey background color
   const blue = rgb(0.1, 0.7, 0.8); // Light grey background color
   //age
@@ -236,7 +236,7 @@ export const generatePdf = async (
     color: rgb(0, 0, 0),
   });
 
-  let protienLineB = `That's ${(handRules.palm / meals).toFixed()} palm or ${(
+  let protienLineB = `That's ${Math.round(handRules.palm / meals)} palm or ${(
     macros.protien / meals
   ).toFixed()} g of protien per meal`;
   fourthPage.drawRectangle({
@@ -273,7 +273,7 @@ export const generatePdf = async (
     color: rgb(0, 0, 0),
   });
 
-  let carbsLineB = `That's ${(handRules.handful / meals).toFixed()} palm or ${(
+  let carbsLineB = `That's ${Math.round(handRules.handful / meals)} palm or ${(
     macros.carbs / meals
   ).toFixed()} g of protien per meal`;
   fourthPage.drawRectangle({
@@ -310,7 +310,7 @@ export const generatePdf = async (
     color: rgb(0, 0, 0),
   });
 
-  let fatsLineB = `That's ${(handRules.thumb / meals).toFixed()} palm or ${(
+  let fatsLineB = `That's ${Math.round(handRules.thumb / meals)} palm or ${(
     macros.fats / meals
   ).toFixed()} g of protien per meal`;
   fourthPage.drawRectangle({
@@ -369,7 +369,7 @@ export const generatePdf = async (
   const url_ = window.URL.createObjectURL(new Blob([pdfBytes]));
   const link = document.createElement("a");
   link.href = url_;
-  link.setAttribute("download", "file.pdf"); //or any other extension
+  link.setAttribute("download", "CALORIE, MACRO, AND PORTION GUIDE.pdf"); //or any other extension
   document.body.appendChild(link);
   link.click();
 };

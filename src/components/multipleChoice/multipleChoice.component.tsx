@@ -53,11 +53,13 @@ const MultipleChoice = () => {
           } ${selectedOption === option.label ? "selected" : ""}`}
           onClick={() => handleSelect(option.label)}
         >
-          {/* <img
-            src={option.image}
-            alt={option.label}
-            className="exercise-image"
-          /> */}
+          {option.image && (
+            <img
+              src={option.image}
+              alt={option.label}
+              className="exercise-image"
+            />
+          )}
           <h3 className="exercise-label">{option.label}</h3>
           <p className="exercise-description">{option.description}</p>
         </div>
