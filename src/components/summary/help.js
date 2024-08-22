@@ -372,4 +372,26 @@ export const generatePdf = async (
   link.setAttribute("download", "CALORIE, MACRO, AND PORTION GUIDE.pdf"); //or any other extension
   document.body.appendChild(link);
   link.click();
+  // Send PDF to the backend
+  const formData = new FormData();
+  formData.append(
+    "file",
+    new Blob([pdfBytes], { type: "application/pdf" }),
+    "report.pdf"
+  );
+  formData.append("email", answers.email);
+
+  const response = await fetch(
+    "http://nutrition-calculator-server.vercel.app/send-pdf",
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+
+  if (response.ok) {
+    alert("PDF sent successfully!");
+  } else {
+    alert("Failed to send PDF.");
+  }
 };
