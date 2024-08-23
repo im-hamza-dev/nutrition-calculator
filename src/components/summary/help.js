@@ -18,6 +18,7 @@ export const generatePdf = async (
     eatingStyle,
     meals,
     goals,
+    name
   } = answers;
 
   const existingPdfBytes = await fetch(PdfFile).then((res) =>
@@ -28,6 +29,7 @@ export const generatePdf = async (
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
   const pages = pdfDoc.getPages();
+  const firstPage = pages[0];
   const thirdPage = pages[2];
   const fourthPage = pages[3];
   const fifthPage = pages[4];
@@ -363,7 +365,25 @@ export const generatePdf = async (
     opacity: 0.6,
     color: rgb(0, 0, 0),
   });
-  console.log(width, height);
+
+    //name
+    firstPage.drawRectangle({
+      x: 220,
+      y: 370,
+      width: 300,
+      height: 50,
+      color: backgroundColorWhite,
+      zIndex:100
+    });
+    firstPage.drawText(name, {
+      x: 243,
+      y: 380,
+      size: 19,
+      font: helveticaFont,
+      opacity: 0.6,
+      color: rgb(0, 0, 0),
+    });
+  console.log(width, height, answers);
 
   const pdfBytes = await pdfDoc.save();
   const url_ = window.URL.createObjectURL(new Blob([pdfBytes]));
