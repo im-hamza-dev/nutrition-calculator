@@ -60,8 +60,8 @@ const Height = () => {
               type="number"
               value={feet}
               onChange={(e) => setFeet(parseInt(e.target.value))}
-              min={2}
-              max={9}
+              min={4}
+              max={7}
             />
             <span>ft</span>
           </div>
@@ -83,8 +83,8 @@ const Height = () => {
               type="number"
               value={cm}
               onChange={(e) => setCm(parseInt(e.target.value))}
-              min={60}
-              max={300}
+              min={122}
+              max={213}
             />
             <span>cm</span>
           </div>
@@ -92,7 +92,7 @@ const Height = () => {
       )}
 
       <p className="valid-range">
-        Valid height is {unit === "FT" ? "2'-9'11\"" : "60-300cm"}
+        Valid height is {unit === "FT" ? "4'-7'\"" : "122 - 213cm"}
       </p>
     </div>
   );

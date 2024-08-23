@@ -1,14 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./weight.component.scss";
+import { Input } from "reactstrap";
 import { QuestionStates } from "../../context/questionsProvider";
+import moment from "moment";
 
 const Weight = () => {
-  const [unit, setUnit] = useState("KG");
+  const [unit, setUnit] = useState("LBS");
   const [weight, setWeight] = useState(null);
   const [targetDate, setTargetDate] = useState("");
   let { answers, setAnswers, currentQuestionIndex, questionsArr } =
     QuestionStates();
   let currentQuestion = questionsArr[currentQuestionIndex];
+  let minTarget = useMemo(() => {
+    let currentDate = new Date(); // Get the current date
+    let nextMonthDate = new Date(currentDate); // Copy the current date
+
+    // Set the month to the next month
+    nextMonthDate.setMonth(currentDate.getMonth() + 1);
+    let minDate = moment(nextMonthDate).format("YYYY-MM-DD");
+    return minDate;
+  }, []);
+
+  let maxTarget = useMemo(() => {
+    let currentDate = new Date(); // Get the current date
+    let nextMonthDate = new Date(currentDate); // Copy the current date
+
+    // Set the month to the next month
+    nextMonthDate.setMonth(currentDate.getMonth() + 12);
+    let maxDate = moment(nextMonthDate).format("YYYY-MM-DD");
+
+    return maxDate;
+  }, []);
 
   useEffect(() => {
     if (currentQuestion.id === "Q6") {
@@ -58,6 +80,8 @@ const Weight = () => {
           type="number"
           value={weight || 0}
           onChange={handleWeightChange}
+          min={unit === "LBS" ? 100 : 45}
+          max={unit === "LBS" ? 500 : 225}
         />
         <div className="unit-toggle">
           <button
@@ -79,10 +103,12 @@ const Weight = () => {
       </p>
 
       {currentQuestion.id === "Q6" && (
-        <input
+        <Input
           type="date"
           value={targetDate}
           onChange={(e) => updateDateToAnswer(e.target.value)}
+          min={minTarget.toString()}
+          max={maxTarget.toString()}
         />
       )}
     </div>

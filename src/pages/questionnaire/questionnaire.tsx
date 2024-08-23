@@ -20,14 +20,14 @@ const Questionnaire = () => {
           <button onClick={handleBack} className="nextButton">
             Back
           </button>
+          <div className="brandWrapper">
+            <img src={Brand} alt="Fitness Coaching" className="brand" />{" "}
+            <h2 className="heading">Calorie & Macro Calculator</h2>
+            <h2>Zach Lloyd Coaching</h2>
+          </div>
           <div>{currentQuestionIndex + 1}/13</div>
         </div>
-        <div className="brandWrapper">
-          <img src={Brand} alt="Fitness Coaching" className="brand" />{" "}
-          <h2 className="heading">
-            Precision Nutrition with "Zach Lloyd Transformation Coaching"
-          </h2>
-        </div>
+
         <div className="hamburgerWrapper">
           {categories?.map((catg) => (
             <div

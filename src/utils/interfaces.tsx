@@ -6,6 +6,7 @@ interface QuestionDetails {
   type: string; //type interface
   validation: any;
   options: any;
+  recommended?: true;
 }
 
 export type { QuestionDetails };

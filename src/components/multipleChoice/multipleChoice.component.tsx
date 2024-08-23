@@ -62,6 +62,7 @@ const MultipleChoice = () => {
           )}
           <h3 className="exercise-label">{option.label}</h3>
           <p className="exercise-description">{option.description}</p>
+          {option.recommended && <p className="recommended">Recommended</p>}
         </div>
       ))}
     </div>

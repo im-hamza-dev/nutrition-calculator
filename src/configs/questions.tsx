@@ -14,13 +14,20 @@ import Speed1 from "../assets/images/speedo1.svg";
 import Speed2 from "../assets/images/speedo2.svg";
 import Speed3 from "../assets/images/speedo3.svg";
 import Speed4 from "../assets/images/speedo4.svg";
+import VLight from "../assets/images/vlight.png";
+import Light from "../assets/images/light.png";
+import Moderate from "../assets/images/moderate.png";
+import Intense from "../assets/images/intense.png";
+import VIntense from "../assets/images/vintense.png";
+import Men from "../assets/images/man.png";
+import Women from "../assets/images/women.png";
 export const questionsData: any = [
   {
     id: "Q1",
     category: "Details",
     question: "What's your age?",
-    preQuestion: 'Okay, first "personal" question.',
-    description: "We won't tell",
+    preQuestion: "",
+    description: "",
     type: "number",
     validation: {
       min: 18,
@@ -32,7 +39,7 @@ export const questionsData: any = [
 
     category: "Details",
     question: "What's your biological sex?",
-    preQuestion: "Very good. Let's keep moving.",
+    preQuestion: "",
     description: "",
     type: "multipleChoice",
 
@@ -46,12 +53,14 @@ export const questionsData: any = [
         label: "Male",
         description: "",
         visible: true,
+        image: Men,
       },
       {
         id: 1,
         label: "Female",
         description: "",
         visible: true,
+        image: Women,
       },
     ],
   },
@@ -60,25 +69,25 @@ export const questionsData: any = [
 
     category: "Details",
     question: "How tall are you?",
-    preQuestion: "Got it. Next question.",
+    preQuestion: "Got it. Next.",
     description: "",
     type: "height",
     validation: {
-      min: 60, //cm
-      max: 300,
+      min: 122, //cm
+      max: 213,
     },
   },
   {
     id: "Q4",
 
     category: "Details",
-    question: "How much do you weigh right now?",
-    preQuestion: "Great. Last question in the section.",
+    question: "How much do you weight today?",
+    preQuestion: "Last question in this section, you're cruising.",
     description: "",
     type: "weight",
     validation: {
-      min: 23, //kgs
-      max: 227,
+      min: 45, //kgs
+      max: 225,
     },
   },
   {
@@ -92,13 +101,6 @@ export const questionsData: any = [
     validation: {},
     options: [
       {
-        id: 1,
-        label: "Lose Weight",
-        description: "You'd like to lose at least 10 to 15 pounds (or more).",
-        image: LoseWeight, //// Replace with actual image path
-        visible: true,
-      },
-      {
         id: 2,
         label: "Build Muscle",
         description:
@@ -107,11 +109,10 @@ export const questionsData: any = [
         visible: true,
       },
       {
-        id: 3,
-        label: "Athletic Performance",
-        description:
-          "You want optimal nutrition to support long and intense athletic training. (Minimal to no weight change desired.)",
-        image: Athletic, //Replace with actual image path
+        id: 1,
+        label: "Lose Weight",
+        description: "You'd like to lose at least 10 to 15 pounds (or more).",
+        image: LoseWeight, //// Replace with actual image path
         visible: true,
       },
       {
@@ -122,27 +123,19 @@ export const questionsData: any = [
         image: Body, //Replace with actual image path
         visible: true,
       },
-      {
-        id: 5,
-        label: "Improve Health",
-        description:
-          "You want to improve your nutrition and overall health, while maintaining your current weight.",
-        image: Health, //// Replace with actual image path
-        visible: true,
-      },
     ],
   },
   {
     id: "Q6",
 
     category: "Goals",
-    question: "How much do you want to weigh?",
-    preQuestion: "Let's get really specific on this.",
+    question: "How much do you want to weigh by when?",
+    preQuestion: "Let's get specific.",
     description: "",
     type: "weight",
     validation: {
-      min: 23, //kgs
-      max: 227,
+      min: 45, //kgs
+      max: 225,
     },
   },
   {
@@ -150,7 +143,7 @@ export const questionsData: any = [
 
     category: "Diet",
     question: "What's your preferred eating style?",
-    preQuestion: "Almost there. Time to talk food.",
+    preQuestion: "Lets talk grub!",
     description: "",
     type: "multipleChoice",
     validation: {},
@@ -207,7 +200,7 @@ export const questionsData: any = [
 
     category: "Diet",
     question:
-      "Do you want to use Fully Plant-Based's standard macronutrient ratios, or customize?",
+      "Do you want to use our standard macronutrient ratios, or try customization?",
     preQuestion: "Tell us how to run the numbers.",
     description: "",
     type: "multipleChoice",
@@ -220,17 +213,19 @@ export const questionsData: any = [
       //   image: "path/to/very-light.png", // Replace with actual image path
       //   visible: true,
       // },
-      {
-        id: 1,
-        label: "Balanced",
-        description: "30% Protien, 35% Carb, 35% Fat",
-        visible: true,
-      },
+
       {
         id: 2,
         label: "Low-Fat",
         description: "30% Protien, 50% Carb, 20% Fat",
         visible: true,
+      },
+      {
+        id: 1,
+        label: "Balanced",
+        description: "30% Protien, 35% Carb, 35% Fat",
+        visible: true,
+        recommended: true,
       },
       {
         id: 3,
@@ -246,12 +241,12 @@ export const questionsData: any = [
     category: "Diet",
     question: "How many meals do you like to eat each day?",
     preQuestion: "Just a couple of more questions.",
-    description: "",
+    description: "Choose between 1-6 meals",
     type: "number",
     validation: {
       note: "Valid selection is 1 to 8 meals.",
       min: 1,
-      max: 8,
+      max: 6,
     },
   },
   {
@@ -259,7 +254,7 @@ export const questionsData: any = [
 
     category: "Activity",
     question: "Describe how active you are each day.",
-    preQuestion: "Now tell us about your activity levels.",
+    preQuestion: "",
     description: "(not including purposeful exercise)",
     type: "multipleChoice",
     validation: {},
@@ -268,24 +263,28 @@ export const questionsData: any = [
         id: 1,
         label: "Very Light",
         description: "Sitting most of the day (example: desk job).",
+        image: Speed1, // Replace with actual image path
       },
       {
         id: 2,
         label: "Light",
         description:
           "A mix of sitting, standing, and light activity (example: teacher).",
+        image: Speed2, // Replace with actual image path
       },
       {
         id: 3,
         label: "Moderate",
         description:
           "Continuous gentle to moderate activity (example: restaurant server). ",
+        image: Speed3, // Replace with actual image path
       },
       {
         id: 4,
         label: "Heavy",
         description:
           "Strenuous activity throughout the day (example: construction work).",
+        image: Speed4, // Replace with actual image path
       },
     ],
   },
@@ -294,7 +293,7 @@ export const questionsData: any = [
 
     category: "Activity",
     question: "What best describes your weekly workouts?",
-    preQuestion: "Cool. Let's go a little deeper on exercise.",
+    preQuestion: "",
     description: "",
     type: "multipleChoice",
     validation: {},
@@ -303,31 +302,31 @@ export const questionsData: any = [
         id: 1,
         label: "Very Light",
         description: "Almost no purposeful exercise.",
-        image: Speed1, // Replace with actual image path
+        image: VLight,
       },
       {
         id: 2,
         label: "Light",
         description: "1-3 hours of gentle to moderate exercise.",
-        image: Speed2, // Replace with actual image path
+        image: Light, // Replace with actual image path
       },
       {
         id: 3,
         label: "Moderate",
         description: "3-4 hours of moderate exercise.",
-        image: Speed3, // Replace with actual image path
+        image: Moderate, // Replace with actual image path
       },
       {
         id: 4,
         label: "Intense",
         description: "4-6 hours of moderate to strenuous exercise.",
-        image: Speed4, // Replace with actual image path
+        image: Intense, // Replace with actual image path
       },
       {
         id: 5,
         label: "Very Intense",
         description: "7+ hours of strenuous exercise.",
-        image: Speed4, // Replace with actual image path
+        image: VIntense, // Replace with actual image path
       },
     ],
   },
@@ -335,8 +334,8 @@ export const questionsData: any = [
     id: "Q12",
 
     category: "Results",
-    question: "Give Contact Details!",
-    preQuestion: "",
+    question: "Where should we send your personalized Macro and Calorie Guide",
+    preQuestion: "You Finished!",
     description: "",
     type: "name",
     validation: {},
