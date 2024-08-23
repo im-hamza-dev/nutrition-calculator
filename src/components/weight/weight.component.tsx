@@ -99,7 +99,7 @@ const Weight = () => {
         </div>
       </div>
       <p className="valid-range">
-        Valid weight is {unit === "LBS" ? "50-500 lbs" : "23-227 kg"}
+        Valid weight is {unit === "LBS" ? "50-500 lbs" : "45-225 kg"}
       </p>
 
       {currentQuestion.id === "Q6" && (
