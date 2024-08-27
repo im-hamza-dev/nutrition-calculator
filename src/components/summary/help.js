@@ -402,7 +402,7 @@ export const generatePdf = async (
   formData.append("email", answers.email);
 
   const response = await fetch(
-    "https://nutrition-calculator-server.vercel.app/send-pdf",
+    "http://23.21.71.157:5000/send-pdf",
     {
       method: "POST",
       body: formData,
