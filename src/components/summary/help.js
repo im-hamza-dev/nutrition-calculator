@@ -1,11 +1,13 @@
 import { degrees, PDFDocument, rgb, StandardFonts } from "pdf-lib";
-import PdfFile from "../../assets/files/template.pdf";
+import PdfFile from "../../assets/files/template2.pdf";
 
 export const generatePdf = async (
   answers,
   calculateCalories,
   macros,
-  handRules
+  handRules,
+  firstPagePdf,
+  dataUrlImage
 ) => {
   const {
     weight,
@@ -18,7 +20,7 @@ export const generatePdf = async (
     eatingStyle,
     meals,
     goals,
-    name
+    name,
   } = answers;
 
   const existingPdfBytes = await fetch(PdfFile).then((res) =>
@@ -257,6 +259,26 @@ export const generatePdf = async (
     color: rgb(0, 0, 0),
   });
 
+  //veggies
+  let veggiesLine = `${macros.veggies} - ${
+    macros.veggies + 2
+  } fist-sized portions`;
+  fourthPage.drawRectangle({
+    x: 140,
+    y: 520,
+    width: 300,
+    height: 30,
+    color: backgroundColorWhite,
+  });
+  fourthPage.drawText(veggiesLine, {
+    x: 150,
+    y: 526,
+    size: 15,
+    font: helveticaFont,
+    opacity: 0.6,
+    color: rgb(0, 0, 0),
+  });
+
   //carbs
   let carbsLineA = `${handRules.handful} cupped handfuls (or ${macros.carbs} g)`;
   fourthPage.drawRectangle({
@@ -365,24 +387,36 @@ export const generatePdf = async (
     opacity: 0.6,
     color: rgb(0, 0, 0),
   });
+  console.log(dataUrlImage);
+  const image = await pdfDoc.embedPng(dataUrlImage);
+  const { width: imgWidth, height: imgHeight } = image.scale(1);
+  let pageA = pdfDoc.addPage();
+  pageA.drawImage(image, {
+    x: 30,
+    y: 150,
+    width: imgWidth,
+    height: imgHeight,
+  });
 
-    //name
-    firstPage.drawRectangle({
-      x: 220,
-      y: 370,
-      width: 300,
-      height: 50,
-      color: backgroundColorWhite,
-      zIndex:100
-    });
-    firstPage.drawText(name, {
-      x: 243,
-      y: 380,
-      size: 19,
-      font: helveticaFont,
-      opacity: 0.6,
-      color: rgb(0, 0, 0),
-    });
+  // pageA.drawRectangle({
+  //   x: 220,
+  //   y: 370,
+  //   width: 300,
+  //   height: 50,
+  //   color: backgroundColorWhite,
+  //   zIndex: 100,
+  // });
+  // pageA.drawText(name, {
+  //   x: 243,
+  //   y: 380,
+  //   size: 19,
+  //   font: helveticaFont,
+  //   opacity: 0.6,
+  //   color: rgb(0, 0, 0),
+  // });
+
+  pdfDoc.insertPage(0, pageA);
+  pdfDoc.removePage(1);
   console.log(width, height, answers);
 
   const pdfBytes = await pdfDoc.save();
@@ -401,13 +435,10 @@ export const generatePdf = async (
   );
   formData.append("email", answers.email);
 
-  const response = await fetch(
-    "http://23.21.71.157:5000/send-pdf",
-    {
-      method: "POST",
-      body: formData,
-    }
-  );
+  const response = await fetch("http://23.21.71.157:5000/send-pdf", {
+    method: "POST",
+    body: formData,
+  });
 
   if (response.ok) {
     alert("PDF sent successfully!");

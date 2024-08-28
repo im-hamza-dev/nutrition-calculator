@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { QuestionStates } from "../../context/questionsProvider";
 import { calculateCalories, daysUntilDeadline } from "../../utils/helper";
 // @ts-ignore
 import "./summary.scss";
 import Protien from "../../assets/images/palm.svg";
 import Fats from "../../assets/images/thumb.svg";
+import Veggies from "../../assets/images/fist.svg";
 import Carbs from "../../assets/images/cupped.svg";
-
+import Brand from "../../assets/images/brand.png";
+import html2canvas from "html2canvas";
 import { generatePdf } from "./help";
 const nutritionData = [
   {
@@ -44,13 +46,16 @@ const Summary = () => {
   const [caloriesData, setCaloriesData] = useState<any>(null);
   const [macros, setMacros] = useState<any>({
     protien: 0,
+    veggies: 0,
     carbs: 0,
     fats: 0,
   });
+  console.log(macros);
   const [handRules, setHandRules] = useState<any>({
     palm: 0,
     handful: 0,
     thumb: 0,
+    fist: 0,
   });
 
   const [macrosRatio, setMacrosRatio] = useState<any>({
@@ -89,6 +94,7 @@ const Summary = () => {
     let calorieData_: any = calculateCalories(answers);
     setCaloriesData(calorieData_);
     let macros_ = macros;
+    macros_.veggies = 2 * answers.meals;
     macros_.protien = Math.floor(
       (calorieData_?.requiredCalories * ratio.protien) / 100 / 4
     );
@@ -117,11 +123,51 @@ const Summary = () => {
     return ratio;
   };
 
+  const componentRef = useRef<any>();
+
+  const handleCapture = async () => {
+    let container = document.getElementById("firstPageDiv");
+    if (!container) {
+      return "";
+    }
+    let canvas: any = await html2canvas(container);
+    let url = canvas.toDataURL("image/png", 1.0);
+    console.log(canvas, url);
+    return url;
+  };
+
+  let firstPagePdf = () => {
+    return (
+      <div className="firstPageParent" ref={componentRef} id="firstPageDiv">
+        <img src={Brand} />
+        <div className="">{answers?.name}</div>
+        <hr />
+        <div className="firstPageParentTitle">CALORIE, MACRO,</div>
+        <div className="firstPageParentTitle">AND PORTION GUIDE</div>
+        <hr />
+        <div className="firstPageParentBottom">
+          <div className="firstPageParentBottomCreated">Created By</div>
+          <br />
+          <div className="firstPageParentBottomTitle">Zach Lloyd Coaching</div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="questionWrapper">
       <button
         className={"export-button"}
-        onClick={() => generatePdf(answers, caloriesData, macros, handRules)}
+        onClick={async () => {
+          generatePdf(
+            answers,
+            caloriesData,
+            macros,
+            handRules,
+            firstPagePdf,
+            await handleCapture()
+          );
+        }}
       >
         Access your Complete Guide
       </button>
@@ -178,6 +224,7 @@ const Summary = () => {
           <div className="nutrition-item">
             <div className="nutrition-image">
               {item === "protien" && <img src={Protien} alt={"Palm"} />}
+              {item === "veggies" && <img src={Veggies} alt={"Fist"} />}
               {item === "carbs" && <img src={Carbs} alt={"Carbo"} />}
               {item === "fats" && <img src={Fats} alt={"Fats"} />}
             </div>
@@ -185,6 +232,10 @@ const Summary = () => {
               <h3>
                 {item === "protien" &&
                   `${handRules.palm} palm sized portions ( or ${macros[item]} g ) \n of Protien per day`}
+                {item === "veggies" &&
+                  `${macros.veggies} - ${
+                    macros.veggies + 2
+                  } fist-sized portions \n of Veggies per day`}
                 {item === "carbs" &&
                   `${handRules.handful} cupped handfuls ( or ${macros[item]} g ) \n of Carbohydrates per day`}
                 {item === "fats" &&
@@ -197,16 +248,17 @@ const Summary = () => {
                   )} palm or ${Math.round(
                     macros.protien / answers?.meals
                   )} g of protien per meal`}
+                {item === "veggies" && `That's 2-3 fist per meal`}
                 {item === "carbs" &&
                   `That's ${Math.round(
                     handRules.handful / answers?.meals
-                  )} palm or ${Math.round(
+                  )} handful or ${Math.round(
                     macros.carbs / answers?.meals
                   )} g of protien per meal`}
                 {item === "fats" &&
                   `That's ${Math.round(
                     handRules.thumb / answers?.meals
-                  )} palm or ${Math.round(
+                  )} thumb or ${Math.round(
                     macros.fats / answers?.meals
                   )} g of protien per meal`}
               </p>
@@ -233,6 +285,7 @@ const Summary = () => {
         <li>How to make adjustments and maximize your results</li>
         <li>Personalized portion tracker (this really works!)</li>
       </div>
+      <div style={{ opacity: 0 }}>{firstPagePdf()}</div>
     </div>
   );
 };
