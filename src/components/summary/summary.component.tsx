@@ -179,7 +179,9 @@ const Summary = () => {
       </div>
       <div className="summaryRow">
         <div>Current Weight</div>
-        <div>{answers.weight} kg</div>
+        <div>
+          {answers.weight} {answers.isKg ? "kg" : "lbs"}
+        </div>
       </div>
       <div className="summaryRow">
         <div>Eating Style</div>
@@ -196,9 +198,12 @@ const Summary = () => {
           Calories per day.
         </p>
         <p>
-          To reach your goal of <strong>{answers.targetWeight} kg </strong> in{" "}
-          <strong>{daysUntilDeadline(answers.targetDate)} days </strong> at your
-          current body weight and activity level, requires about:
+          To reach your goal of{" "}
+          <strong>
+            {answers.targetWeight} {answers.isKg ? "kg" : "lbs"}{" "}
+          </strong>{" "}
+          in <strong>{daysUntilDeadline(answers.targetDate)} days </strong> at
+          your current body weight and activity level, requires about:
         </p>
         <h1>
           <strong>{caloriesData?.requiredCalories}</strong> Calories per day.

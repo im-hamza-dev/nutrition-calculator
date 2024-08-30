@@ -49,13 +49,28 @@ const Weight = () => {
     const kilograms = pounds * kgPerPound;
     return kilograms;
   };
+  const convertToLbs = (kg: number) => {
+    if (typeof kg !== "number" || isNaN(kg)) {
+      return "Please provide a valid number for kg";
+    }
+    const conversionFactor = 2.20462;
+    const lbs = kg * conversionFactor;
+    return Number(lbs.toFixed(2));
+  };
 
   const handleWeightChange = (e: any) => {
     setWeight(e.target.value);
     let weight_ = e.target.value;
-    if (unit === "LBS") {
-      weight_ = convertToKg(weight_);
+    if (currentQuestion.id === "Q4") {
+      answers.isKg = unit === "KG";
+    } else if (currentQuestion.id === "Q6") {
+      if (answers.isKg) {
+        weight_ = unit === "LBS" ? convertToKg(weight_) : weight_;
+      } else {
+        weight_ = unit === "KG" ? convertToLbs(weight_) : weight_;
+      }
     }
+
     let answers_ = structuredClone(answers);
     if (currentQuestion.id === "Q6") {
       answers_.targetWeight = parseInt(weight_);
@@ -99,7 +114,7 @@ const Weight = () => {
         </div>
       </div>
       <p className="valid-range">
-        Valid weight is {unit === "LBS" ? "50-500 lbs" : "45-225 kg"}
+        Valid weight is {unit === "LBS" ? "100-500 lbs" : "45-225 kg"}
       </p>
 
       {currentQuestion.id === "Q6" && (

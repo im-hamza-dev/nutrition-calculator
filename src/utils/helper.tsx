@@ -38,7 +38,7 @@ export const daysUntilDeadline = (deadlineDate: string) => {
 };
 
 const calculateCalories = (data: any) => {
-  const {
+  let {
     weight,
     height,
     age,
@@ -46,8 +46,12 @@ const calculateCalories = (data: any) => {
     targetDate,
     gender,
     exerciseLevel,
+    isKg,
   } = data;
-
+  if (!isKg) {
+    weight = convertToKg(weight);
+    targetWeight = convertToKg(targetWeight);
+  }
   // Calculate BMR using Mifflin-St Jeor Equation for Men
   const BMR =
     gender === "Male"
@@ -78,6 +82,20 @@ const calculateCalories = (data: any) => {
     dailyCaloricDeficit: dailyCaloricDeficit.toFixed(2),
     requiredCalories: requiredCalories.toFixed(2),
   };
+};
+
+const convertToKg = (pounds: number) => {
+  const kgPerPound = 0.45359237; // 1 pound is approximately 0.45359237 kilograms
+  const kilograms = pounds * kgPerPound;
+  return kilograms;
+};
+const convertToLbs = (kg: number) => {
+  if (typeof kg !== "number" || isNaN(kg)) {
+    return "Please provide a valid number for kg";
+  }
+  const conversionFactor = 2.20462;
+  const lbs = kg * conversionFactor;
+  return Number(lbs.toFixed(2));
 };
 
 export { calculateCalories };

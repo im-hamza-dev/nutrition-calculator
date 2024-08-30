@@ -357,6 +357,7 @@ export const answersInitial = {
   name: "",
   email: "",
   gender: null,
+  isKg: true,
   weight: null, // in kg
   height: null, // in cm
   age: null, // in years

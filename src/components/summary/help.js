@@ -21,6 +21,7 @@ export const generatePdf = async (
     meals,
     goals,
     name,
+    isKg,
   } = answers;
 
   const existingPdfBytes = await fetch(PdfFile).then((res) =>
@@ -81,7 +82,7 @@ export const generatePdf = async (
     height: 30,
     color: backgroundColor,
   });
-  thirdPage.drawText(JSON.stringify(weight) + " kg", {
+  thirdPage.drawText(JSON.stringify(weight) + `${isKg ? "kg" : "lbs"}`, {
     x: 350,
     y: 470,
     size: 25,
