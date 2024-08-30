@@ -262,28 +262,28 @@ export const questionsData: any = [
       {
         id: 1,
         label: "Very Light",
-        description: "Sitting most of the day (example: desk job).",
+        description: "Sitting most of the day\n (example: desk job).",
         image: Speed1, // Replace with actual image path
       },
       {
         id: 2,
         label: "Light",
         description:
-          "A mix of sitting, standing, and light activity (example: teacher).",
+          "A mix of sitting, standing, and light activity\n (example: teacher).",
         image: Speed2, // Replace with actual image path
       },
       {
         id: 3,
         label: "Moderate",
         description:
-          "Continuous gentle to moderate activity (example: restaurant server). ",
+          "Continuous gentle to moderate activity\n (example: restaurant server). ",
         image: Speed3, // Replace with actual image path
       },
       {
         id: 4,
         label: "Heavy",
         description:
-          "Strenuous activity throughout the day (example: construction work).",
+          "Strenuous activity throughout the day\n (example: construction work).",
         image: Speed4, // Replace with actual image path
       },
     ],

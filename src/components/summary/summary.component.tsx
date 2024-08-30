@@ -169,7 +169,7 @@ const Summary = () => {
           );
         }}
       >
-        Access your Complete Guide
+        Download your Complete Guide
       </button>
       <hr></hr>
       <h2>Brief Summary</h2>

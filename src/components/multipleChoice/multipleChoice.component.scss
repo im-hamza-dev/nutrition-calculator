@@ -8,8 +8,8 @@
   width: 100%;
   margin: 10px auto;
   .exercise-option {
-    border: 2px solid #354f7579;
-    background-color: #354f7579;
+    border: 2px solid #68358a;
+    background-color: #a994b7;
     border-radius: 8px;
     padding: 5px 20px;
     text-align: center;
@@ -23,20 +23,21 @@
     flex-direction: column;
     gap: 2px;
     position: relative;
+    white-space: break-spaces;
     &.genderQ {
       height: auto;
     }
     &:hover {
-      border-color: #13366b9a;
-      background-color: #13366b9a;
+      border-color: #60486f;
+      background-color: #60486f;
       .exercise-label {
         color: #fcfdffce;
       }
     }
 
     &.selected {
-      border-color: #13366b9a;
-      background-color: #13366b9a;
+      border-color: #60486f;
+      background-color: #60486f;
       .exercise-label {
         color: #fcfdffce;
       }

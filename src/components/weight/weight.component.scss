@@ -26,6 +26,7 @@
       border: none;
       border-radius: 15px 0px 0px 15px;
       outline: none;
+      background-color: #edeaef;
     }
   }
 
@@ -41,7 +42,7 @@
         border-radius: 0px 15px 15px 0px;
       }
       &.active {
-        background-color: #007b8f;
+        background-color: #59317b;
         color: #fff;
       }
     }

@@ -79,8 +79,8 @@ const calculateCalories = (data: any) => {
   return {
     BMR: BMR.toFixed(2),
     TDEE: TDEE.toFixed(2),
-    dailyCaloricDeficit: dailyCaloricDeficit.toFixed(2),
-    requiredCalories: requiredCalories.toFixed(2),
+    dailyCaloricDeficit: Math.round(dailyCaloricDeficit),
+    requiredCalories: Math.round(requiredCalories),
   };
 };
 

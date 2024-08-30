@@ -59,7 +59,7 @@
 
 h1 {
   margin-left: 20px;
-  color: #0099cc;
+  color: #59317b;
 }
 
 .tabs {
@@ -75,8 +75,8 @@ h1 {
 }
 
 .tab.active {
-  border-bottom: 2px solid #0099cc;
-  color: #0099cc;
+  border-bottom: 2px solid #59317b;
+  color: #59317b;
 }
 
 .question-container {

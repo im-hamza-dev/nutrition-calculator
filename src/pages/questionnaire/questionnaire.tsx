@@ -17,9 +17,11 @@ const Questionnaire = () => {
     <div className="page-wrap">
       <div className="content-wrap">
         <div className="backWrapper">
-          <button onClick={handleBack} className="nextButton">
-            Back
-          </button>
+          {currentQuestionIndex < 12 && (
+            <button onClick={handleBack} className="nextButton">
+              Back
+            </button>
+          )}
           <div className="brandWrapper">
             <img src={Brand} alt="Fitness Coaching" className="brand" />{" "}
             <h2 className="heading">Calorie & Macro Calculator</h2>
